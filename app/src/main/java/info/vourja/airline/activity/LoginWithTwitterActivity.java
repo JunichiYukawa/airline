@@ -4,16 +4,20 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 import info.vourja.airline.AirLineApplication;
+import info.vourja.airline.Model.UserInfo;
+import info.vourja.airline.NetService.AirLineService;
+import info.vourja.airline.NetService.Request.RegisterRequest;
 import info.vourja.airline.R;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 
 public class LoginWithTwitterActivity extends Activity {
@@ -26,19 +30,14 @@ public class LoginWithTwitterActivity extends Activity {
         setContentView(R.layout.activity_login);
 
         loginButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
-        loginButton.setCallback(new Callback<TwitterSession>() {
+        loginButton.setCallback(new com.twitter.sdk.android.core.Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
                 // The TwitterSession is also available through:
                 // Twitter.getInstance().core.getSessionManager().getActiveSession()
                 TwitterSession session = result.data;
-                // TODO: Remove toast and use the TwitterSession's userID
-                // with your app's user model
-                String msg = "@" + session.getUserName() + " logged in! (#" + session.getUserId() + ")";
-
                 ((AirLineApplication)getApplication()).setTwitterSession(session);
-
-                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                registerTwitterInfo(session);
             }
             @Override
             public void failure(TwitterException exception) {
@@ -55,5 +54,30 @@ public class LoginWithTwitterActivity extends Activity {
         loginButton.onActivityResult(requestCode, resultCode, data);
     }
 
+    private void registerTwitterInfo(TwitterSession session) {
+        AirLineService service = ((AirLineApplication)getApplication()).getAirlineService();
+        service.registerUser(new RegisterRequest(
+                        session.getAuthToken().token,
+                        session.getAuthToken().secret,
+                        session.getUserName(),
+                        session.getUserId()),
+                new Callback<UserInfo>() {
+                    @Override
+                    public void success(UserInfo result, Response response) {
+                        String auth_token = result.getAuth_token();
+                        ((AirLineApplication)getApplication()).setAccessToken(auth_token);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        if(error.getResponse().getStatus() == 409) {
+                            // すでに登録されている
+                        } else {
+                            // その他エラー
+                        }
+                    }
+                }
+        );
+    }
 
 }
