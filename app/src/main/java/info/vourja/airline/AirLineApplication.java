@@ -9,6 +9,8 @@ import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterAuthToken;
 import com.twitter.sdk.android.core.TwitterSession;
 
+import info.vourja.airline.NetService.AirLineService;
+import retrofit.RestAdapter;
 import io.fabric.sdk.android.Fabric;
 
 public class AirLineApplication extends Application {
@@ -17,7 +19,12 @@ public class AirLineApplication extends Application {
     private static final String TWITTER_KEY = "4WcKZtQ2NRG62m2WQ84sr4MVq";
     private static final String TWITTER_SECRET = "kSgTjWSr2za8lDkjg8dI0jaWlREcZKLOH0TiNWUKiIuDDyXIsV";
 
+    // アクセス情報
     private TwitterSession twitterSession;
+    private String accessToken;
+
+    // サーバー情報
+    AirLineService mService;
 
     @Override
     public void onCreate() {
@@ -50,10 +57,28 @@ public class AirLineApplication extends Application {
     public void setTwitterSession(TwitterSession twitterSession) {
         this.twitterSession = twitterSession;
 
-        writePreference();
+        writeTwitterPreference();
     }
 
-    private void writePreference() {
+    public String getAccessToken() {
+        return this.accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public AirLineService getAirlineService() {
+        if(mService == null) {
+            RestAdapter adapter = new RestAdapter.Builder()
+                    .setEndpoint("http://192.168.111.109:5000")
+                    .build();
+            mService = adapter.create(AirLineService.class);
+        }
+        return mService;
+    }
+
+    private void writeTwitterPreference() {
         SharedPreferences data = getSharedPreferences("Twitter", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = data.edit();
         editor.putString("token", twitterSession.getAuthToken().token);
@@ -62,4 +87,5 @@ public class AirLineApplication extends Application {
         editor.putString("username", twitterSession.getUserName());
         editor.apply();
     }
+
 }
