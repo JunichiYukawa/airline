@@ -4,16 +4,27 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterAuthToken;
 import com.twitter.sdk.android.core.TwitterSession;
 
+import io.fabric.sdk.android.Fabric;
+
 public class AirLineApplication extends Application {
+
+    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
+    private static final String TWITTER_KEY = "4WcKZtQ2NRG62m2WQ84sr4MVq";
+    private static final String TWITTER_SECRET = "kSgTjWSr2za8lDkjg8dI0jaWlREcZKLOH0TiNWUKiIuDDyXIsV";
 
     private TwitterSession twitterSession;
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
+        Fabric.with(this, new Twitter(authConfig));
 
         SharedPreferences data = getSharedPreferences("Twitter", Context.MODE_PRIVATE);
         if(data != null) {
