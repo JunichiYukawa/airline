@@ -29,42 +29,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
-        // Session情報がない -> Twitter連携
-        // Session情報はあるけどauth_tokenがない -> token取得
-        // Sessionもtokenもある -> レッツスタート！！
-        AirLineApplication application = (AirLineApplication)this.getApplication();
-        TwitterSession session = application.getTwitterSession();
-        if(session == null) {
-            Intent intent = new Intent(getApplicationContext(), LoginWithTwitterActivity.class);
-            startActivityForResult(intent,0);
-        } else {
-
-            String accesstoken = application.getAccessToken();
-            if(accesstoken == null) {
-                AirLineService service = ((AirLineApplication)getApplication()).getAirlineService();
-                String token_secret = util.getCredentials(session.getAuthToken().token, session.getAuthToken().secret);
-                service.getToken(token_secret, new Callback<UserToken>() {
-                    @Override
-                    public void success(Result<UserToken> result) {
-                        Log.d(TAG, "user token: " + result.data.getToken());
-                        ((AirLineApplication)getApplication()).setAccessToken(result.data.getToken());
-                        init();
-                    }
-
-                    @Override
-                    public void failure(TwitterException exception) {
-                        // アクセストークンの取得に失敗した場合は再度登録
-                        Intent intent = new Intent(getApplicationContext(), LoginWithTwitterActivity.class);
-                        startActivityForResult(intent,0);
-                    }
-                });
-
-            } else {
-                init();
-            }
-        }
-
     }
 
     private void init() {

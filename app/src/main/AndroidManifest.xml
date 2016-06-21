@@ -10,13 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.MainActivity">
+        </activity>
+        <activity android:name=".activity.LoginWithTwitterActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.LoginWithTwitterActivity" />
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="276ad22bec7ff5198a1a95fed7e9f894564220e8" />
