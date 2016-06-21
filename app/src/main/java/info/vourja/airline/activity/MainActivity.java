@@ -1,6 +1,8 @@
 package info.vourja.airline.activity;
 
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +20,7 @@ import info.vourja.airline.Model.UserToken;
 import info.vourja.airline.NetService.AirLineService;
 import info.vourja.airline.NetService.util;
 import info.vourja.airline.R;
+import info.vourja.airline.fragment.HomeFragment;
 import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,15 +30,25 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
+
+        setupFragment();
     }
 
-    private void init() {
-        AirLineApplication application = (AirLineApplication)this.getApplication();
-        TwitterSession session = application.getTwitterSession();
-        String username = session.getUserName();
-        String msg = "Welcome @" + username;
-        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    private void setupFragment() {
+        FragmentManager manager = getSupportFragmentManager();
+        HomeFragment homeFragment = new HomeFragment();
+        Bundle bundle = new Bundle();
+        homeFragment.setArguments(bundle);
+
+        FragmentTransaction tr = manager.beginTransaction();
+        tr.add(R.id.home_layout, homeFragment, "home");
+        tr.commit();
     }
 }
