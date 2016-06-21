@@ -88,6 +88,7 @@ public class LoginWithTwitterActivity extends Activity {
                     public void success(UserInfo result, Response response) {
                         String auth_token = result.getAuth_token();
                         ((AirLineApplication)getApplication()).setAccessToken(auth_token);
+                        moveMainActivity();
                     }
 
                     @Override
@@ -119,8 +120,6 @@ public class LoginWithTwitterActivity extends Activity {
                 TwitterSession session = result.data;
                 ((AirLineApplication)getApplication()).setTwitterSession(session);
                 registerTwitterInfo(session);
-
-                moveMainActivity();
             }
             @Override
             public void failure(TwitterException exception) {

@@ -1,8 +1,7 @@
 package info.vourja.airline.NetService;
 
-import java.util.List;
-
 import info.vourja.airline.Model.AirlineActivity;
+import info.vourja.airline.Model.ModelCollection;
 import info.vourja.airline.Model.UserInfo;
 import info.vourja.airline.Model.UserToken;
 import info.vourja.airline.NetService.Request.RegisterRequest;
@@ -26,6 +25,6 @@ public interface AirLineService {
 
     @GET("/api/activities")
     void getActivities(@Header("Authorization") String token_secret,
-                       Callback<List<AirlineActivity>> cb);
+                       Callback<ModelCollection<AirlineActivity>> cb);
 
 }
