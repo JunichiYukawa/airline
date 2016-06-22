@@ -11,19 +11,19 @@ import java.util.List;
 public class ModelCollection<T> {
 
     @Expose
-    @SerializedName("num_result")
-    long num_result;
+    @SerializedName("total")
+    long total;
 
     @Expose
     @SerializedName("objects")
     List<T> objects;
 
-    public long getNum_result() {
-        return num_result;
+    public long getTotal() {
+        return total;
     }
 
-    public void setNum_result(long num_result) {
-        this.num_result = num_result;
+    public void setTotal(long total) {
+        this.total = total;
     }
 
     public List<T> getObjects() {
