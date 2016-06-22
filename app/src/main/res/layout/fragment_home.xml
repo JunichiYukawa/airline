@@ -120,19 +120,20 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_alignParentEnd="true">
 
         <android.support.v7.widget.AppCompatButton
+            android:id="@+id/setup_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:textSize="48sp"
+            android:textSize="24sp"
             android:background="@android:color/holo_red_dark"
             android:textColor="@android:color/white"
-            android:text="Setup Activity" />
+            android:text="Setup" />
 
     </LinearLayout>
 

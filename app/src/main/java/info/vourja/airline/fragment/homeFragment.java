@@ -4,6 +4,8 @@ package info.vourja.airline.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.transition.TransitionSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import com.twitter.sdk.android.core.TwitterException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import info.vourja.airline.AirLineApplication;
 import info.vourja.airline.Model.AirlineActivity;
 import info.vourja.airline.Model.ModelCollection;
@@ -73,5 +76,12 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    @OnClick(R.id)
+    @OnClick(R.id.setup_button)
+    void onClickSetupButton() {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        SetupFragment next = new SetupFragment();
+        ft.replace(R.id.fragment_layout, next);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
 }
