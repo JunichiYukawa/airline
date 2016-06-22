@@ -62,7 +62,7 @@ public class HomeFragment extends Fragment {
                 textTotalLines.setText(String.valueOf(total_line));
 
                 if(total_activity_count > 0) {
-                    long avg_line = (total_line * 100) / (total_activity_count * 100);
+                    long avg_line = (total_line * 100) / total_activity_count;
                     long avg_line_dec = avg_line % 100;
                     avg_line /= 100;
                     textAvgLines.setText(String.valueOf(avg_line) + "." + String.valueOf(avg_line_dec));
