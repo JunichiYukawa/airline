@@ -25,6 +25,8 @@ import info.vourja.airline.R;
 public class HomeFragment extends Fragment {
 
     @BindView(R.id.total_activity) TextView textTotalActivity;
+    @BindView(R.id.total_lines) TextView textTotalLines;
+    @BindView(R.id.avg_visitor) TextView textAvgLines;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -53,7 +55,21 @@ public class HomeFragment extends Fragment {
         service.getActivities(token_secret, new Callback<ModelCollection<AirlineActivity>>() {
             @Override
             public void success(Result<ModelCollection<AirlineActivity>> result) {
-                textTotalActivity.setText(String.valueOf(result.data.getNum_result()));
+                long total_activity_count = result.data.getTotal();
+                textTotalActivity.setText(String.valueOf(total_activity_count));
+
+                long total_line = 0;
+                for( AirlineActivity act : result.data.getObjects()) {
+                    total_line += act.getLines().size();
+                }
+                textTotalLines.setText(String.valueOf(total_line));
+
+                if(total_activity_count > 0) {
+                    long avg_line = (total_line * 100) / (total_activity_count * 100);
+                    long avg_line_dec = avg_line % 100;
+                    avg_line /= 100;
+                    textAvgLines.setText(String.valueOf(avg_line) + "." + String.valueOf(avg_line_dec));
+                }
             }
 
             @Override

@@ -20,6 +20,7 @@
                 android:layout_marginTop="30dp"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/total_lines"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -27,7 +28,7 @@
                     android:textColor="@android:color/holo_red_dark"
                     android:fontFamily="sans-serif"
                     android:textStyle="bold"
-                    android:text="88888"/>
+                    android:text="0"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -59,7 +60,7 @@
                     android:textSize="48sp"
                     android:fontFamily="sans-serif"
                     android:textStyle="bold"
-                    android:text="888"/>
+                    android:text="0"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -75,13 +76,14 @@
                 android:orientation="vertical"
                 android:layout_weight="1">
                 <TextView
+                    android:id="@+id/avg_visitor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:textSize="48sp"
                     android:fontFamily="sans-serif"
                     android:textStyle="bold"
-                    android:text="888"/>
+                    android:text="0"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -103,7 +105,7 @@
                     android:textSize="48sp"
                     android:fontFamily="sans-serif"
                     android:textStyle="bold"
-                    android:text="888"/>
+                    android:text="0"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
