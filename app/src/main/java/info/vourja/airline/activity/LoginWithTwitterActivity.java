@@ -98,10 +98,10 @@ public class LoginWithTwitterActivity extends Activity {
                                 // すでに登録されている
                                 moveMainActivity();
                             } else {
-                                // その他エラー
+                                // TODO サーバーエラーで登録できなかったぞ
                             }
                         } else {
-                            // その他エラー
+                            // TODO いろいろ諸々で登録できなかったぞ
                         }
                     }
                 }

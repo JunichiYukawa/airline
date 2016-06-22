@@ -27,12 +27,6 @@ public class HomeFragment extends Fragment {
     @BindView(R.id.total_activity) TextView textTotalActivity;
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    @Nullable
-    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_home, container, false);
@@ -62,4 +56,6 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
+    @OnClick(R.id)
 }

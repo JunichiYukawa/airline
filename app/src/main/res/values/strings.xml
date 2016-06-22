@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">AirLine</string>
     <string name="main_title">Main</string>
+
+    <string name="activity_name_hint">Activity Name</string>
+    <string name="activity_location_hint">Location</string>
+
+    <string name="activity_startdate_hint">Open</string>
+    <string name="activity_enddate_hint">Close</string>
+    <string name="activity_description_hint">Description</string>
+    <string name="activity_url_hint">URL</string>
+    <string name="activity_template_hint">Tweet Message!!</string>
+
 </resources>
