@@ -4,14 +4,18 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterAuthToken;
 import com.twitter.sdk.android.core.TwitterSession;
 
 import info.vourja.airline.NetService.AirLineService;
+import info.vourja.airline.util.datetime;
 import retrofit.RestAdapter;
 import io.fabric.sdk.android.Fabric;
+import retrofit.converter.GsonConverter;
 
 public class AirLineApplication extends Application {
 
@@ -70,8 +74,13 @@ public class AirLineApplication extends Application {
 
     public AirLineService getAirlineService() {
         if(mService == null) {
+            Gson gson = new GsonBuilder()
+                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                    .create();
+
             RestAdapter adapter = new RestAdapter.Builder()
                     .setEndpoint("http://192.168.111.109:5000")
+                    .setConverter(new GsonConverter(gson))
                     .build();
             mService = adapter.create(AirLineService.class);
         }

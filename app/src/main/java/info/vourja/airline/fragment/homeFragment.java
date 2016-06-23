@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.transition.TransitionSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import info.vourja.airline.AirLineApplication;
-import info.vourja.airline.Model.AirlineActivity;
+import info.vourja.airline.Model.AirLineActivity;
 import info.vourja.airline.Model.ModelCollection;
 import info.vourja.airline.NetService.AirLineService;
 import info.vourja.airline.NetService.util;
@@ -49,14 +48,14 @@ public class HomeFragment extends Fragment {
         AirLineService service = application.getAirlineService();
         String token_secret = util.getCredentials(token, "unused");
 
-        service.getActivities(token_secret, new Callback<ModelCollection<AirlineActivity>>() {
+        service.getActivities(token_secret, new Callback<ModelCollection<AirLineActivity>>() {
             @Override
-            public void success(Result<ModelCollection<AirlineActivity>> result) {
+            public void success(Result<ModelCollection<AirLineActivity>> result) {
                 long total_activity_count = result.data.getTotal();
                 textTotalActivity.setText(String.valueOf(total_activity_count));
 
                 long total_line = 0;
-                for( AirlineActivity act : result.data.getObjects()) {
+                for( AirLineActivity act : result.data.getObjects()) {
                     total_line += act.getLines().size();
                 }
                 textTotalLines.setText(String.valueOf(total_line));

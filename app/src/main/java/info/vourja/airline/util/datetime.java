@@ -8,8 +8,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import info.vourja.airline.R;
@@ -20,8 +22,10 @@ import info.vourja.airline.fragment.DateTimeDialogFragment;
  */
 public class datetime {
 
+    public static final String format = "yyyy/MM/dd HH:mm";
+
     public static String Cal2Str(Calendar cal) {
-        return Cal2Str(cal, "yyyy/MM/dd HH:mm");
+        return Cal2Str(cal, format);
     }
 
     public static String Cal2Str(Calendar cal, String Pattern) {
@@ -42,5 +46,14 @@ public class datetime {
             }
         });
         fragment.show(manager, "datetime");
+    }
+
+    public static Date parse(String str) {
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+            return simpleDateFormat.parse(str);
+        } catch ( ParseException e ) {
+            return null;
+        }
     }
 }

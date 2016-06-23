@@ -5,12 +5,17 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
-public class AirlineActivity {
+public class AirLineActivity {
 
     @Expose
     @SerializedName("id")
     private long id;
+
+    @Expose
+    @SerializedName("uuid")
+    private UUID uuid;
 
     @Expose
     @SerializedName("activity_name")
@@ -51,6 +56,14 @@ public class AirlineActivity {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public String getName() {
