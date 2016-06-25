@@ -5,31 +5,28 @@ import info.vourja.airline.Model.ModelCollection;
 import info.vourja.airline.Model.UserInfo;
 import info.vourja.airline.Model.UserToken;
 import info.vourja.airline.NetService.Request.RegisterRequest;
-import retrofit.Callback;
-import retrofit.http.Body;
-import retrofit.http.GET;
-import retrofit.http.Header;
-import retrofit.http.POST;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.POST;
 
 public interface AirLineService {
 
     @POST("/api/tw/register")
-    void registerUser(
-            @Body RegisterRequest body,
-            Callback<UserInfo> cb
+    Call<UserInfo> registerUser(
+            @Body RegisterRequest body
     );
 
     @GET("/api/token")
-    void getToken(@Header("Authorization") String token_secret,
-                  Callback<UserToken> cb);
+    Call<UserToken> getToken(@Header("Authorization") String token_secret);
 
     @GET("/api/activities")
-    void getActivities(@Header("Authorization") String token_secret,
-                       Callback<ModelCollection<AirLineActivity>> cb);
+    Call<ModelCollection<AirLineActivity>> getActivities(@Header("Authorization") String token_secret);
 
     @POST("/api/activities")
-    void postActivities(@Header("Authorization") String token_secret,
-                        @Body AirLineActivity activity,
-                        Callback<AirLineActivity> cb);
+    Call<AirLineActivity> postActivities(@Header("Authorization") String token_secret,
+                        @Body AirLineActivity activity);
 
 }

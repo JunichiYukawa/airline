@@ -12,10 +12,10 @@ import com.twitter.sdk.android.core.TwitterAuthToken;
 import com.twitter.sdk.android.core.TwitterSession;
 
 import info.vourja.airline.NetService.AirLineService;
-import info.vourja.airline.util.datetime;
-import retrofit.RestAdapter;
 import io.fabric.sdk.android.Fabric;
-import retrofit.converter.GsonConverter;
+import retrofit2.Converter;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AirLineApplication extends Application {
 
@@ -28,7 +28,7 @@ public class AirLineApplication extends Application {
     private String accessToken;
 
     // サーバー情報
-    AirLineService mService;
+    Retrofit mRetrofit;
 
     @Override
     public void onCreate() {
@@ -54,6 +54,8 @@ public class AirLineApplication extends Application {
         }
     }
 
+
+
     public TwitterSession getTwitterSession() {
         return twitterSession;
     }
@@ -73,18 +75,17 @@ public class AirLineApplication extends Application {
     }
 
     public AirLineService getAirlineService() {
-        if(mService == null) {
+        if(mRetrofit == null) {
             Gson gson = new GsonBuilder()
                     .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
                     .create();
 
-            RestAdapter adapter = new RestAdapter.Builder()
-                    .setEndpoint("http://192.168.111.109:5000")
-                    .setConverter(new GsonConverter(gson))
+            mRetrofit = new Retrofit.Builder()
+                    .baseUrl("http://192.168.111.109:5000")
+                    .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
-            mService = adapter.create(AirLineService.class);
         }
-        return mService;
+        return mRetrofit.create(AirLineService.class);
     }
 
     private void writeTwitterPreference() {

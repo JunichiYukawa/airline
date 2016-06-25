@@ -17,9 +17,10 @@ import info.vourja.airline.NetService.AirLineService;
 import info.vourja.airline.NetService.Request.RegisterRequest;
 import info.vourja.airline.NetService.util;
 import info.vourja.airline.R;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class LoginWithTwitterActivity extends Activity {
@@ -47,21 +48,25 @@ public class LoginWithTwitterActivity extends Activity {
             if(accesstoken == null) {
                 AirLineService service = ((AirLineApplication)getApplication()).getAirlineService();
                 String token_secret = util.getCredentials(session.getAuthToken().token, session.getAuthToken().secret);
-                service.getToken(token_secret, new com.twitter.sdk.android.core.Callback<UserToken>() {
+
+                Call<UserToken> call = service.getToken(token_secret);
+                call.enqueue(new Callback<UserToken>() {
                     @Override
-                    public void success(Result<UserToken> result) {
-                        Log.d(TAG, "user token: " + result.data.getToken());
-                        ((AirLineApplication)getApplication()).setAccessToken(result.data.getToken());
-                        moveMainActivity();
+                    public void onResponse(Call<UserToken> call, Response<UserToken> response) {
+                        if(response.body() != null) {
+                            ((AirLineApplication)getApplication()).setAccessToken(response.body().getToken());
+                            moveMainActivity();
+                        } else {
+                            createTwitterLoginView();
+                        }
                     }
 
                     @Override
-                    public void failure(TwitterException exception) {
+                    public void onFailure(Call<UserToken> call, Throwable t) {
                         // アクセストークンの取得に失敗した場合は再度登録
                         createTwitterLoginView();
                     }
                 });
-
             } else {
                 moveMainActivity();
             }
@@ -78,40 +83,38 @@ public class LoginWithTwitterActivity extends Activity {
 
     private void registerTwitterInfo(TwitterSession session) {
         AirLineService service = ((AirLineApplication)getApplication()).getAirlineService();
-        service.registerUser(new RegisterRequest(
-                        session.getAuthToken().token,
-                        session.getAuthToken().secret,
-                        session.getUserName(),
-                        session.getUserId()),
-                new Callback<UserInfo>() {
-                    @Override
-                    public void success(UserInfo result, Response response) {
-                        String auth_token = result.getAuth_token();
-                        ((AirLineApplication)getApplication()).setAccessToken(auth_token);
-                        moveMainActivity();
-                    }
 
-                    @Override
-                    public void failure(RetrofitError error) {
-                        if(error.getKind() == RetrofitError.Kind.HTTP) {
-                            if(error.getResponse().getStatus() == 409) {
-                                // すでに登録されている
-                                moveMainActivity();
-                            } else {
-                                // TODO サーバーエラーで登録できなかったぞ
-                            }
-                        } else {
-                            // TODO いろいろ諸々で登録できなかったぞ
-                        }
-                    }
+        Call<UserInfo> call =  service.registerUser(new RegisterRequest(
+                session.getAuthToken().token,
+                session.getAuthToken().secret,
+                session.getUserName(),
+                session.getUserId()));
+        call.enqueue(new Callback<UserInfo>() {
+            @Override
+            public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
+
+                if( response.code() == 409) {
+                    moveMainActivity();
+                } else if ( response.code() == 200) {
+                    String auth_token = response.body().getAuth_token();
+                    ((AirLineApplication) getApplication()).setAccessToken(auth_token);
+                    moveMainActivity();
+                } else {
+                    // TODO サーバーがダウンとか
                 }
-        );
+            }
+
+            @Override
+            public void onFailure(Call<UserInfo> call, Throwable t) {
+            }
+        });
     }
 
     private void createTwitterLoginView() {
         setContentView(R.layout.activity_login);
 
         loginButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
+
         loginButton.setCallback(new com.twitter.sdk.android.core.Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {

@@ -56,4 +56,14 @@ public class datetime {
             return null;
         }
     }
+
+    public static String date2isostr(Date date) {
+        if(date == null) { return null; }
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            return simpleDateFormat.format(date);
+        } catch ( IllegalArgumentException e ) {
+            return null;
+        }
+    }
 }

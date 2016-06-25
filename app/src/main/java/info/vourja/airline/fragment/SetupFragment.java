@@ -5,17 +5,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.twitter.sdk.android.core.Callback;
-import com.twitter.sdk.android.core.Result;
-import com.twitter.sdk.android.core.TwitterException;
-
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -28,6 +21,8 @@ import info.vourja.airline.NetService.AirLineService;
 import info.vourja.airline.NetService.util;
 import info.vourja.airline.R;
 import info.vourja.airline.util.datetime;
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class SetupFragment extends Fragment{
 
@@ -72,8 +67,8 @@ public class SetupFragment extends Fragment{
 
         act.setName(activity_name.getText().toString());
         act.setLocation(activity_location.getText().toString());
-        act.setStart_date(start_date);
-        act.setEnd_date(end_date);
+        act.setStart_date(datetime.date2isostr(start_date));
+        act.setEnd_date(datetime.date2isostr(end_date));
         act.setDescription(activity_description.getText().toString());
         act.setUrl(activity_url.getText().toString());
         act.setTemplate(activity_template.getText().toString());
@@ -86,15 +81,17 @@ public class SetupFragment extends Fragment{
         AirLineService service = application.getAirlineService();
         String token = application.getAccessToken();
         String token_secret = util.getCredentials(token, "unused");
-        service.postActivities(token_secret, act, new Callback<AirLineActivity>() {
+
+        Call<AirLineActivity> call = service.postActivities(token_secret, act);
+        call.enqueue(new retrofit2.Callback<AirLineActivity>() {
             @Override
-            public void success(Result<AirLineActivity> result) {
-                Log.d(TAG, result.data.getUuid().toString());
+            public void onResponse(Call<AirLineActivity> call, Response<AirLineActivity> response) {
+                Log.d(TAG, response.body().getUuid().toString());
             }
 
             @Override
-            public void failure(TwitterException exception) {
-                Log.d(TAG, "activiti post failure");
+            public void onFailure(Call<AirLineActivity> call, Throwable t) {
+
             }
         });
     }

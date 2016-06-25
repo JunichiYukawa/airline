@@ -27,11 +27,11 @@ public class AirLineActivity {
 
     @Expose
     @SerializedName("activity_start_date")
-    private Date   start_date;
+    private String   start_date;
 
     @Expose
     @SerializedName("activity_end_date")
-    private Date   end_date;
+    private String   end_date;
 
     @Expose
     @SerializedName("activity_description")
@@ -82,19 +82,19 @@ public class AirLineActivity {
         this.location = location;
     }
 
-    public Date getStart_date() {
+    public String getStart_date() {
         return start_date;
     }
 
-    public void setStart_date(Date start_date) {
+    public void setStart_date(String start_date) {
         this.start_date = start_date;
     }
 
-    public Date getEnd_date() {
+    public String getEnd_date() {
         return end_date;
     }
 
-    public void setEnd_date(Date end_date) {
+    public void setEnd_date(String end_date) {
         this.end_date = end_date;
     }
 
