@@ -1,5 +1,6 @@
 package info.vourja.airline.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,8 @@ import info.vourja.airline.Model.AirLineActivity;
 import info.vourja.airline.NetService.AirLineService;
 import info.vourja.airline.NetService.util;
 import info.vourja.airline.R;
+import info.vourja.airline.activity.LineActivity;
+import info.vourja.airline.activity.MainActivity;
 import info.vourja.airline.util.datetime;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -86,7 +89,9 @@ public class SetupFragment extends Fragment{
         call.enqueue(new retrofit2.Callback<AirLineActivity>() {
             @Override
             public void onResponse(Call<AirLineActivity> call, Response<AirLineActivity> response) {
-                Log.d(TAG, response.body().getUuid().toString());
+
+                Intent intent = new Intent(getActivity(), LineActivity.class);
+                startActivity(intent);
             }
 
             @Override

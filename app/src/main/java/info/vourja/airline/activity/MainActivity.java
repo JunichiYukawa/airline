@@ -22,12 +22,6 @@ public class MainActivity extends AppCompatActivity {
         setupFragment();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
-
     private void setupFragment() {
         FragmentManager manager = getSupportFragmentManager();
         HomeFragment homeFragment = new HomeFragment();

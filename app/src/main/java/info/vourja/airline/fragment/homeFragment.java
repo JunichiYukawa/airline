@@ -38,6 +38,12 @@ public class HomeFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 
         ButterKnife.bind(this, v);
+
+        if(savedInstanceState != null) {
+            textTotalActivity.setText(savedInstanceState.getString("textTotalActivity"));
+            textTotalLines.setText(savedInstanceState.getString("textTotalLines"));
+            textAvgLines.setText(savedInstanceState.getString("textAvgLines"));
+        }
         return v;
     }
 
@@ -54,20 +60,24 @@ public class HomeFragment extends Fragment {
         call.enqueue(new retrofit2.Callback<ModelCollection<AirLineActivity>>() {
             @Override
             public void onResponse(Call<ModelCollection<AirLineActivity>> call, Response<ModelCollection<AirLineActivity>> response) {
-                long total_activity_count = response.body().getTotal();
-                textTotalActivity.setText(String.valueOf(total_activity_count));
+                if(response.body() != null ) {
+                    long total_activity_count = response.body().getTotal();
+                    textTotalActivity.setText(String.valueOf(total_activity_count));
 
-                long total_line = 0;
-                for (AirLineActivity act : response.body().getObjects()) {
-                    total_line += act.getLines().size();
-                }
-                textTotalLines.setText(String.valueOf(total_line));
+                    long total_line = 0;
+                    for (AirLineActivity act : response.body().getObjects()) {
+                        total_line += act.getLines().size();
+                    }
+                    textTotalLines.setText(String.valueOf(total_line));
 
-                if (total_activity_count > 0) {
-                    long avg_line = (total_line * 100) / total_activity_count;
-                    long avg_line_dec = avg_line % 100;
-                    avg_line /= 100;
-                    textAvgLines.setText(String.valueOf(avg_line) + "." + String.valueOf(avg_line_dec));
+                    if (total_activity_count > 0) {
+                        long avg_line = (total_line * 100) / total_activity_count;
+                        long avg_line_dec = avg_line % 100;
+                        avg_line /= 100;
+                        textAvgLines.setText(String.valueOf(avg_line) + "." + String.valueOf(avg_line_dec));
+                    }
+                } else {
+
                 }
             }
 
@@ -85,5 +95,13 @@ public class HomeFragment extends Fragment {
         ft.replace(R.id.fragment_layout, next);
         ft.addToBackStack(null);
         ft.commit();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("textTotalActivity", textTotalActivity.getText().toString());
+        outState.putString("textTotalLines", textTotalLines.getText().toString());
+        outState.putString("textAvgLines", textAvgLines.getText().toString());
     }
 }
