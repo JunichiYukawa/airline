@@ -7,32 +7,93 @@
     android:background="@android:color/holo_red_dark">
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:paddingTop="24dp"
         android:gravity="center_horizontal"
         android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:background="@android:color/holo_red_dark">
-        <TextView
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="@dimen/dgts__margin_right"
-            android:textSize="18sp"
-            android:textColor="@android:color/white"
-            android:fontFamily="sans-serif"
-            android:text="待ち人数"
-            android:textStyle="bold"/>
-        <TextView
+            android:layout_marginRight="24dp"
+            android:background="@android:color/holo_red_dark">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/dgts__margin_right"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"
+                android:fontFamily="sans-serif"
+                android:text="RESERVED"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/reserved_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textSize="24sp"
+                android:textColor="@android:color/white"
+                android:fontFamily="sans-serif"
+                android:text="8888"
+                android:textStyle="bold"/>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:textSize="24sp"
-            android:textColor="@android:color/white"
-            android:fontFamily="sans-serif"
-            android:text="8888"
-            android:textStyle="bold"/>
+            android:layout_marginRight="24dp"
+            android:background="@android:color/holo_red_dark">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/dgts__margin_right"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"
+                android:fontFamily="sans-serif"
+                android:text="ARRIVED"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/lines_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textSize="24sp"
+                android:textColor="@android:color/white"
+                android:fontFamily="sans-serif"
+                android:text="8888"
+                android:textStyle="bold"/>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_red_dark">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/dgts__margin_right"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"
+                android:fontFamily="sans-serif"
+                android:text="DONE"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/done_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textSize="24sp"
+                android:textColor="@android:color/white"
+                android:fontFamily="sans-serif"
+                android:text="8888"
+                android:textStyle="bold"/>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -52,6 +113,7 @@
             android:text="只今の番号"
             android:textStyle="bold"/>
         <TextView
+            android:id="@+id/current_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="90sp"
@@ -69,6 +131,12 @@
         android:background="@android:color/holo_red_dark">
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/activity_name"
+        android:text=""
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"/>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -97,6 +165,7 @@
             android:gravity="center_horizontal"
             android:layout_weight="1">
             <Button
+                android:id="@+id/qr_button"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:text="QR"
@@ -112,6 +181,7 @@
             android:gravity="center_horizontal"
             android:layout_weight="1">
             <Button
+                android:id="@+id/next_button"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:text="NEXT"

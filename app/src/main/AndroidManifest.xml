@@ -17,14 +17,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.MainActivity" android:label="@string/main_title">
         </activity>
-        <activity android:name=".activity.LineActivity">
+        <activity android:name=".activity.LineActivity" android:label="@string/line_title">
         </activity>
+        <activity
+            android:name=".activity.CaptureActivityAnyOrientation"
+            android:screenOrientation="fullSensor"
+            android:stateNotNeeded="true"
+            android:theme="@style/zxing_CaptureTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="276ad22bec7ff5198a1a95fed7e9f894564220e8" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.FLASHLIGHT"/>
 </manifest>

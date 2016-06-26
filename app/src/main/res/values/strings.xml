@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">AirLine</string>
     <string name="main_title">Main</string>
+    <string name="line_title">Line</string>
 
     <string name="activity_name_hint">Activity Name</string>
     <string name="activity_location_hint">Location</string>
@@ -11,4 +12,5 @@
     <string name="activity_url_hint">URL</string>
     <string name="activity_template_hint">Tweet Message!!</string>
 
+    <string name="action_finish">FINISH</string>
 </resources>

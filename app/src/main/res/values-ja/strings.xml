@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">AirLine</string>
     <string name="main_title">メイン</string>
+    <string name="line_title">受付中</string>
 
     <string name="activity_name_hint">アクティビティ名</string>
     <string name="activity_location_hint">場所</string>
@@ -10,4 +11,6 @@
     <string name="activity_description_hint">説明</string>
     <string name="activity_url_hint">URL</string>
     <string name="activity_template_hint">ツイートメッセージ</string>
+
+    <string name="action_finish">終了</string>
 </resources>
