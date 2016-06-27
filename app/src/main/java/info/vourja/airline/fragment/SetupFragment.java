@@ -12,6 +12,7 @@ import android.widget.EditText;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -90,13 +91,24 @@ public class SetupFragment extends Fragment{
             @Override
             public void onResponse(Call<AirLineActivity> call, Response<AirLineActivity> response) {
 
-                Intent intent = new Intent(getActivity(), LineActivity.class);
-                startActivity(intent);
+                if(response.body() != null) {
+                    UUID uuid = response.body().getUuid();
+                    String strUUID = uuid.toString();
+
+                    Intent intent = new Intent(getActivity(), LineActivity.class);
+                    intent.setAction(Intent.ACTION_SEND);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("uuid", strUUID);
+                    int requestCode = 1000;
+                    startActivityForResult(intent, requestCode);
+                } else {
+                    // TODO アクティビティの登録に失敗したケース
+                }
             }
 
             @Override
             public void onFailure(Call<AirLineActivity> call, Throwable t) {
-
+                // TODO アクティビティの登録に失敗したケース
             }
         });
     }

@@ -92,15 +92,15 @@ public class LoginWithTwitterActivity extends Activity {
         call.enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
-
-                if( response.code() == 409) {
-                    moveMainActivity();
-                } else if ( response.code() == 200) {
-                    String auth_token = response.body().getAuth_token();
-                    ((AirLineApplication) getApplication()).setAccessToken(auth_token);
-                    moveMainActivity();
-                } else {
-                    // TODO サーバーがダウンとか
+                switch(response.code()) {
+                    case 200:
+                        String auth_token = response.body().getAuth_token();
+                        ((AirLineApplication) getApplication()).setAccessToken(auth_token);
+                        moveMainActivity();
+                        break;
+                    default:
+                        // TODO サーバーがダウンとか
+                        break;
                 }
             }
 

@@ -49,6 +49,13 @@ public class AirLineActivity {
     @SerializedName("activity_lines")
     private List<Line> lines;
 
+    @Expose
+    @SerializedName("finished_date")
+    private String finished_date;
+
+    @Expose
+    @SerializedName("created_date")
+    private String created_date;
 
     public long getId() {
         return id;
@@ -129,4 +136,21 @@ public class AirLineActivity {
     public void setLines(List<Line> line) {
         this.lines = line;
     }
+
+    public String getFinished_date() {
+        return finished_date;
+    }
+
+    public void setFinished_date(String finished_date) {
+        this.finished_date = finished_date;
+    }
+
+    public String getCreated_date() {
+        return created_date;
+    }
+
+    public void setCreated_date(String created_date) {
+        this.created_date = created_date;
+    }
+
 }
