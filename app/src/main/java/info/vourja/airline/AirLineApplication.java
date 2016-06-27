@@ -81,7 +81,7 @@ public class AirLineApplication extends Application {
                     .create();
 
             mRetrofit = new Retrofit.Builder()
-                    .baseUrl("http://128.199.210.207")
+                    .baseUrl("http://vourja.info")
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
         }
